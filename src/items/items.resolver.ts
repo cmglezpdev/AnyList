@@ -36,7 +36,9 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Item)
-  removeItem(@Args('id', { type: () => Int }) id: number) {
+  removeItem(
+    @Args('id', { type: () => ID }) id: string
+  ): Promise<Item> {
     return this.itemsService.remove(id);
   }
 }
