@@ -1,8 +1,8 @@
-import { Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Mutation, Resolver, Args } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
-import { User } from '../users/entities/user.entity';
-import {  } from '@nestjs/common';
+import { SignUpInput } from './dto/input';
+import { AuthResponse } from './types';
 
 @Resolver()
 export class AuthResolver {
@@ -10,22 +10,22 @@ export class AuthResolver {
     private readonly authService: AuthService
   ) {}
 
-  @Mutation(() => , { name: 'signUp' })
+  @Mutation(() => AuthResponse, { name: 'signUp' })
   signUp(
-
-  ): Promise<User> {
-    // return this.authService.signUp();
+    @Args('signUpInput') signUpInput: SignUpInput
+  ): Promise<AuthResponse> {
+    return this.authService.signUp(signUpInput);
   }
   
-  @Mutation(() => , { name: 'signIn' })
-  signIn(
+  // @Mutation(() => , { name: 'signIn' })
+  // signIn(
 
-  ): Promise<User> {
-    // return this.authService.signIn();
-  }
+  // ): Promise<User> {
+  //   // return this.authService.signIn();
+  // }
 
-  @Query(() => , { name: 'revalite' })
-  revalidateToken(): Promise<string> {
-    // return this.authService.revalidateToken();
-  }
+  // @Query(() => , { name: 'revalite' })
+  // revalidateToken(): Promise<string> {
+  //   // return this.authService.revalidateToken();
+  // }
 }
