@@ -1,6 +1,7 @@
 /dist
 /node_modules
-
+/postgres
 
 yarn-error.log
 yarn.lock
+.env
