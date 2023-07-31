@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity({ name: 'items' })
@@ -13,6 +13,14 @@ export class Item {
   @Field(() => String)
   @Column('text')
   name: string;
+
+  @Field(() => String, { nullable: true })
+  @Column('text', { nullable: true })
+  quantityUnits: string;
+
+  @Field(() => String)
+  @Column('text')
+  category: string;
 
   @ManyToOne(() => User, user => user.items, { nullable: false, eager: true })
   @Index('userId-index')
