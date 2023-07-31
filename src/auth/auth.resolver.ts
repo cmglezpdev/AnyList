@@ -3,6 +3,7 @@ import { Mutation, Resolver, Args, Query } from '@nestjs/graphql';
 
 import { AuthResponse } from './types';
 import { JwtAuthGuard } from './guards';
+import { ValidRoles } from './enums';
 import { GetUser } from './decorators';
 import { SignUpInput, SignInInput } from './dto/input';
 import { AuthService } from './auth.service';
@@ -31,7 +32,7 @@ export class AuthResolver {
   @Query(() => AuthResponse, { name: 'revalidate' })
   @UseGuards(JwtAuthGuard)
   revalidateToken(
-    @GetUser() user: User
+    @GetUser([ValidRoles.admin]) user: User
   ): AuthResponse {
     return this.authService.revalidateToken(user);
   }
