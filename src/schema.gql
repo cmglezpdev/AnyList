@@ -13,7 +13,6 @@ type User {
   id: ID!
   fullName: String!
   email: String!
-  password: String!
   roles: [String!]!
   isActive: Boolean!
 }
@@ -28,6 +27,7 @@ type Query {
   item(id: ID!): Item!
   users: [User!]!
   user(id: ID!): User!
+  revalidate: AuthResponse!
 }
 
 type Mutation {
