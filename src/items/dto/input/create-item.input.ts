@@ -12,7 +12,7 @@ export class CreateItemInput {
   @Field(() => String, { nullable: true })
   @IsOptional()
   @IsString()
-  quantityUnits: string;
+  quantityUnits?: string;
 
   @Field(() => String)
   @IsString()

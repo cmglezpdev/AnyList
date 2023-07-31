@@ -16,7 +16,7 @@ export class Item {
 
   @Field(() => String, { nullable: true })
   @Column('text', { nullable: true })
-  quantityUnits: string;
+  quantityUnits?: string;
 
   @Field(() => String)
   @Column('text')
