@@ -15,6 +15,7 @@ type User {
   email: String!
   roles: [ValidRoles!]!
   isActive: Boolean!
+  lastUpdateBy: User
 }
 
 """Valid roles for the users"""

@@ -30,11 +30,11 @@ export class UsersResolver {
     return this.usersService.findOneById(id);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'blockUser' })
   blockUser(
     @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
-    @GetUser([ValidRoles.admin]) user: User
+    @GetUser([ValidRoles.admin]) adminUser: User
   ): Promise<User> {
-    return this.usersService.block(id);
+    return this.usersService.block(id, adminUser);
   }
 }
