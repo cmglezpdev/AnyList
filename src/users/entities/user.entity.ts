@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ValidRoles } from '../../auth/enums';
 
 @Entity({ name: 'users' })
 @ObjectType()
@@ -19,9 +20,9 @@ export class User {
   @Column('text')
   password: string;
   
-  @Column({ type: 'text', array: true, default: ['user'] })
-  @Field(() => [String])
-  roles: string[];
+  @Column({ type: 'text', array: true, default: [ValidRoles.user] })
+  @Field(() => [ValidRoles])
+  roles: ValidRoles[];
   
   @Column({ type: 'boolean', default: true })
   @Field(() => Boolean)
