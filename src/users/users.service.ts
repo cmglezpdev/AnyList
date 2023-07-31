@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { SignUpInput } from '../auth/dto/input';
 import { FindAllArgs } from './dto/args';
+import { UpdateUserInput } from './dto/inputs';
 
 @Injectable()
 export class UsersService {
@@ -56,6 +57,20 @@ export class UsersService {
     userToBlock.isActive = false;
     userToBlock.lastUpdateBy = adminUser;
     return this.usersRepository.save(userToBlock);
+  }
+
+  async update(id: string, updateUserInput: UpdateUserInput, adminUser: User): Promise<User> {
+    try {
+      const user = await this.usersRepository.preload(updateUserInput);
+      if(updateUserInput.password) {
+        user.password = bcrypt.hashSync(updateUserInput.password, 10);
+      }
+
+      user.lastUpdateBy = adminUser;
+      return await this.usersRepository.save(user);
+    } catch (error) {
+      this.handleDBErrors(error);
+    }
   }
 
   private handleDBErrors(error: any): never {
