@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
-import { Module, Logger } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { ApolloDriverConfig, ApolloDriver, ApolloDriverAsyncConfig } from '@nestjs/apollo';
@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemsModule } from './items/items.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { SeedModule } from './seed/seed.module';
 import { JwtPayload } from './auth/auth.types';
 
 @Module({
@@ -54,6 +55,7 @@ import { JwtPayload } from './auth/auth.types';
     ItemsModule,
     UsersModule,
     AuthModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],
