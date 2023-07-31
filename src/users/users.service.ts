@@ -33,6 +33,12 @@ export class UsersService {
     throw new Error(`findAll not implemented`)
   }
 
+  async findOneById(id: string): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ id });
+    if(!user) throw new BadRequestException(`The user with id ${id} not found`);
+    return user;
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ email });
     if(!user) throw new BadRequestException(`The ${email} not found`);
