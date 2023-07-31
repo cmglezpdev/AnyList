@@ -3,12 +3,14 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
+import { JwtStrategy } from './strategies';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 
 @Module({
-  providers: [AuthResolver, AuthService],
+  providers: [AuthResolver, AuthService, JwtStrategy],
+  exports: [JwtStrategy, JwtModule, PassportModule],
   imports: [
     ConfigModule,
     JwtModule.registerAsync({
@@ -22,7 +24,6 @@ import { AuthResolver } from './auth.resolver';
       })
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    
     UsersModule,
   ]
 })
