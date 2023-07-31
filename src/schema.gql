@@ -13,8 +13,15 @@ type User {
   id: ID!
   fullName: String!
   email: String!
-  roles: [String!]!
+  roles: [ValidRoles!]!
   isActive: Boolean!
+}
+
+"""Valid roles for the users"""
+enum ValidRoles {
+  user
+  admin
+  superUser
 }
 
 type AuthResponse {
@@ -25,7 +32,7 @@ type AuthResponse {
 type Query {
   items: [Item!]!
   item(id: ID!): Item!
-  users: [User!]!
+  users(roles: [ValidRoles!]! = []): [User!]!
   user(id: ID!): User!
   revalidate: AuthResponse!
 }

@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 
 import { User } from './entities/user.entity';
 import { SignUpInput } from '../auth/dto/input';
+import { FindAllArgs } from './dto/args';
 
 @Injectable()
 export class UsersService {
@@ -29,8 +30,13 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
-    throw new Error(`findAll not implemented`)
+  async findAll(findAllArgs: FindAllArgs): Promise<User[]> {
+    const { roles } = findAllArgs;
+    if(roles.length === 0) return this.usersRepository.find();
+    return this.usersRepository.createQueryBuilder()
+      .where('ARRAY[roles] && ARRAY[:...roles]')
+      .setParameter('roles', roles)
+      .getMany();
   }
 
   async findOneById(id: string): Promise<User> {
