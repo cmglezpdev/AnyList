@@ -1,23 +1,45 @@
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { JwtService } from '@nestjs/jwt';
+import { ApolloDriverConfig, ApolloDriver, ApolloDriverAsyncConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ItemsModule } from './items/items.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtPayload } from './auth/auth.types';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    //   playground: false,
+    //   plugins: [ApolloServerPluginLandingPageLocalDefault()]
+    // }),
+    GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()]
+      imports: [AuthModule],
+      inject: [JwtService],
+      useFactory: async (jwtService: JwtService) => ({
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+          playground: false,
+          plugins: [ApolloServerPluginLandingPageLocalDefault()],
+          context: ({ req }) => {
+            //* Valid that you have a valid token(you are logged) for you can to use the graphql endpoints
+            // TODO: Create a restful api to signIn and signUp because using this validation we don't have access to the signIn graphql endpoint
+            
+             // const token = req.headers.authorization?.replace('Bearer ', '');
+            // if(!token) throw new Error('Token needed');
+            
+            // const payload = jwtService.decode(token);
+            // if(!payload) throw new Error('Token not valid');
+          }
+      }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
