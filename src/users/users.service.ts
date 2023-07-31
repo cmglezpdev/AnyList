@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-
 import { User } from './entities/user.entity';
 import { SignUpInput } from '../auth/dto/input';
 
@@ -16,7 +15,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ){}
 
-  async create(signUpInput: SignUpInput) {
+  async create(signUpInput: SignUpInput): Promise<User> {
     try {
       const user = this.usersRepository.create({
         ...signUpInput,
@@ -36,7 +35,7 @@ export class UsersService {
 
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ email });
-    if(!user) throw new BadRequestException(`${email} not found`);
+    if(!user) throw new BadRequestException(`The ${email} not found`);
     return user;
   }
 
