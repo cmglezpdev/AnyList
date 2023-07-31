@@ -9,7 +9,7 @@ import { SignUpInput, SignInInput } from './dto/input';
 import { AuthService } from './auth.service';
 import { User } from '../users/entities/user.entity';
 
-@Resolver()
+@Resolver(() => AuthResponse)
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService
