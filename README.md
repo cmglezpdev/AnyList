@@ -26,4 +26,6 @@ yarn start:dev
 
 6. Go to site ```localhost:3000/graphql```
 
+7. Run ```Seed Mutation``` to fill database with test data
+
 
