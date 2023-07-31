@@ -34,7 +34,7 @@ export class User {
   @Field(() => User, { nullable: true })
   lastUpdateBy?: User;
   
-  @OneToMany(() => Item, item => item.user, { nullable: true })
+  @OneToMany(() => Item, item => item.user, { lazy: true, nullable: true })
   @JoinColumn()
   @Field(() => [Item], { nullable: true })
   items?: Item[];
