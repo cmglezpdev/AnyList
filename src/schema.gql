@@ -43,6 +43,7 @@ type Query {
   revalidate: AuthResponse!
   users(roles: [ValidRoles!]! = []): [User!]!
   user(id: ID!): User!
+  listsOfUser: [List!]!
   items(limit: Int = 10, offset: Int = 0, search: String): [Item!]!
   item(id: ID!): Item!
   lists: [List!]!
@@ -57,12 +58,12 @@ type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
-
-  """Run build of database"""
-  executeSeed: Boolean!
   createList(createListInput: CreateListInput!): List!
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: ID!): List!
+
+  """Run build of database"""
+  executeSeed: Boolean!
 }
 
 input SignUpInput {
