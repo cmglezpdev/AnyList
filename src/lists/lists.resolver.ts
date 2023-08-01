@@ -1,5 +1,5 @@
 import { UseGuards, ParseUUIDPipe } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 
 import { JwtAuthGuard } from '../auth/guards';
 import { ListsService } from './lists.service';
@@ -7,6 +7,7 @@ import { List } from './entities/list.entity';
 import { GetUser } from '../auth/decorators';
 import { User } from '../users/entities/user.entity';
 import { CreateListInput, UpdateListInput } from './dto/input';
+import { PaginationArgs, SearchArgs } from '../common/dto/args';
 
 @Resolver(() => List)
 @UseGuards(JwtAuthGuard)
@@ -23,9 +24,11 @@ export class ListsResolver {
 
   @Query(() => [List], { name: 'lists' })
   findAll(
-    @GetUser() user: User
+    @GetUser() user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
   ): Promise<List[]> {
-    return this.listsService.findAll(user);
+    return this.listsService.findAll(paginationArgs, searchArgs, user);
   }
 
   @Query(() => List, { name: 'list' })

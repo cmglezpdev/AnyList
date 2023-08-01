@@ -43,10 +43,10 @@ type Query {
   revalidate: AuthResponse!
   users(roles: [ValidRoles!]! = []): [User!]!
   user(id: ID!): User!
-  listsOfUser: [List!]!
+  listsOfUser(limit: Int = 10, offset: Int = 0, search: String): [List!]!
   items(limit: Int = 10, offset: Int = 0, search: String): [Item!]!
   item(id: ID!): Item!
-  lists: [List!]!
+  lists(limit: Int = 10, offset: Int = 0, search: String): [List!]!
   list(id: ID!): List!
 }
 

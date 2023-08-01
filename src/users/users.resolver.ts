@@ -75,8 +75,10 @@ export class UsersResolver {
 
   @Query(() => [List], { name: 'listsOfUser' })
   getLists(
-    @GetUser() user: User
+    @GetUser() user: User,
+    @Args() paginationArgs: PaginationArgs,
+    @Args() searchArgs: SearchArgs
   ): Promise<List[]> {
-    return this.listsService.findAll(user);
+    return this.listsService.findAll(paginationArgs, searchArgs, user);
   }
 }
