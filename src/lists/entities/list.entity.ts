@@ -16,7 +16,7 @@ export class List {
   name: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, user => user.lists)
+  @ManyToOne(() => User, user => user.lists, { eager: true })
   @Index('userIdList-index')
   user: User;
 }
