@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
 import { CreateListInput, UpdateListInput } from './dto/input';
+import { PaginationArgs, SearchArgs } from '../common/dto/args';
 import { User } from '../users/entities/user.entity';
 import { List } from './entities/list.entity';
-import { PaginationArgs, SearchArgs } from '../common/dto/args';
 
 @Injectable()
 export class ListsService {

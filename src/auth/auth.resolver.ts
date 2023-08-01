@@ -1,13 +1,13 @@
 import { UseGuards } from '@nestjs/common';
 import { Mutation, Resolver, Args, Query } from '@nestjs/graphql';
 
-import { AuthResponse } from './types';
-import { JwtAuthGuard } from './guards';
-import { ValidRoles } from './enums';
-import { GetUser } from './decorators';
-import { SignUpInput, SignInInput } from './dto/input';
 import { AuthService } from './auth.service';
 import { User } from '../users/entities/user.entity';
+import { SignUpInput, SignInInput } from './dto/input';
+import { GetUser } from './decorators';
+import { JwtAuthGuard } from './guards';
+import { AuthResponse } from './types';
+import { ValidRoles } from './enums';
 
 @Resolver(() => AuthResponse)
 export class AuthResolver {

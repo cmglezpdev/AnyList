@@ -2,10 +2,10 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { AuthResponse } from './types';
-import { SignInInput, SignUpInput } from './dto/input';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
+import { SignInInput, SignUpInput } from './dto/input';
+import { AuthResponse } from './types';
 
 @Injectable()
 export class AuthService {

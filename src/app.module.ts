@@ -1,19 +1,20 @@
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
-import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriverConfig, ApolloDriver, ApolloDriverAsyncConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ItemsModule } from './items/items.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SeedModule } from './seed/seed.module';
-import { JwtPayload } from './auth/auth.types';
 import { CommonModule } from './common/common.module';
 import { ListsModule } from './lists/lists.module';
+
+import { JwtPayload } from './auth/auth.types';
 
 @Module({
   imports: [
