@@ -61,6 +61,7 @@ type Mutation {
   """Run build of database"""
   executeSeed: Boolean!
   createList(createListInput: CreateListInput!): List!
+  updateList(updateListInput: UpdateListInput!): List!
 }
 
 input SignUpInput {
@@ -98,4 +99,9 @@ input UpdateItemInput {
 
 input CreateListInput {
   name: String!
+}
+
+input UpdateListInput {
+  name: String
+  id: ID!
 }

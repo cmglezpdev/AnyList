@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
 
 import { JwtAuthGuard } from '../auth/guards';
@@ -13,7 +13,7 @@ import { CreateListInput, UpdateListInput } from './dto/input';
 export class ListsResolver {
   constructor(private readonly listsService: ListsService) {}
 
-  @Mutation(() => List)
+  @Mutation(() => List, { name: "createList" })
   createList(
     @GetUser() user: User,
     @Args('createListInput') createListInput: CreateListInput
@@ -31,15 +31,18 @@ export class ListsResolver {
   @Query(() => List, { name: 'list' })
   findOne(
     @GetUser() user: User,
-    @Args('id', { type: () => ID }) id: string
-  ) {
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string
+  ): Promise<List> {
     return this.listsService.findOne(id, user);
   }
 
-  // @Mutation(() => List)
-  // updateList(@Args('updateListInput') updateListInput: UpdateListInput) {
-  //   return this.listsService.update(updateListInput.id, updateListInput);
-  // }
+  @Mutation(() => List, { name: "updateList" })
+  updateList(
+    @GetUser() user: User,
+    @Args('updateListInput') updateListInput: UpdateListInput
+  ): Promise<List> {
+    return this.listsService.update(updateListInput.id, updateListInput, user);
+  }
 
   // @Mutation(() => List)
   // removeList(@Args('id', { type: () => Int }) id: number) {
