@@ -19,9 +19,12 @@ export class ListsService {
       return this.listsRepository.save(list);
   }
 
-  // findAll() {
-  //   return `This action returns all lists`;
-  // }
+  async findAll(user: User): Promise<List[]> {
+      const lists = this.listsRepository.findBy({
+        user: { id: user.id }
+      });
+      return lists;
+  }
 
   // findOne(id: number) {
   //   return `This action returns a #${id} list`;

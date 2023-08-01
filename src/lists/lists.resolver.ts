@@ -17,14 +17,16 @@ export class ListsResolver {
   createList(
     @GetUser() user: User,
     @Args('createListInput') createListInput: CreateListInput
-  ) {
+  ): Promise<List> {
     return this.listsService.create(createListInput, user);
   }
 
-  // @Query(() => [List], { name: 'lists' })
-  // findAll() {
-  //   return this.listsService.findAll();
-  // }
+  @Query(() => [List], { name: 'lists' })
+  findAll(
+    @GetUser() user: User
+  ): Promise<List[]> {
+    return this.listsService.findAll(user);
+  }
 
   // @Query(() => List, { name: 'list' })
   // findOne(@Args('id', { type: () => Int }) id: number) {
