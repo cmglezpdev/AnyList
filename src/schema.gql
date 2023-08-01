@@ -41,6 +41,11 @@ type AuthResponse {
   token: String!
 }
 
+type ListItem {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   revalidate: AuthResponse!
   users(roles: [ValidRoles!]! = []): [User!]!
@@ -49,6 +54,7 @@ type Query {
   item(id: ID!): Item!
   lists(limit: Int = 10, offset: Int = 0, search: String): [List!]!
   list(id: ID!): List!
+  listItem(id: Int!): ListItem!
 }
 
 type Mutation {
@@ -65,6 +71,9 @@ type Mutation {
 
   """Run build of database"""
   executeSeed: Boolean!
+  createListItem(createListItemInput: CreateListItemInput!): ListItem!
+  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
+  removeListItem(id: Int!): ListItem!
 }
 
 input SignUpInput {
@@ -107,4 +116,15 @@ input CreateListInput {
 input UpdateListInput {
   name: String
   id: ID!
+}
+
+input CreateListItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateListItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

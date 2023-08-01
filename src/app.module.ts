@@ -15,6 +15,7 @@ import { CommonModule } from './common/common.module';
 import { ListsModule } from './lists/lists.module';
 
 import { JwtPayload } from './auth/auth.types';
+import { ListItemModule } from './list-item/list-item.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { JwtPayload } from './auth/auth.types';
     SeedModule,
     CommonModule,
     ListsModule,
+    ListItemModule,
   ],
   controllers: [],
   providers: [],
