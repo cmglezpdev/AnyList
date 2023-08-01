@@ -36,6 +36,6 @@ export class User {
   
   @OneToMany(() => Item, item => item.user, { lazy: true, nullable: true })
   @JoinColumn()
-  @Field(() => [Item], { nullable: true })
+  // @Field(() => [Item], { nullable: true })
   items?: Item[];
 }
