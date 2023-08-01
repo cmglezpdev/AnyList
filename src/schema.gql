@@ -6,6 +6,7 @@ type ListItem {
   id: ID!
   quantity: Int!
   completed: Boolean!
+  list: List!
   item: Item!
 }
 
@@ -13,7 +14,8 @@ type List {
   id: ID!
   name: String!
   user: User!
-  listItem: [ListItem!]!
+  items(limit: Int = 10, offset: Int = 0, search: String): [ListItem!]!
+  totalItems: Int!
 }
 
 type User {
@@ -58,7 +60,7 @@ type Query {
   item(id: ID!): Item!
   lists(limit: Int = 10, offset: Int = 0, search: String): [List!]!
   list(id: ID!): List!
-  listItem(id: Int!): ListItem!
+  listItem(id: ID!): ListItem!
 }
 
 type Mutation {
@@ -72,12 +74,11 @@ type Mutation {
   createList(createListInput: CreateListInput!): List!
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: ID!): List!
+  createListItem(createListItemInput: CreateListItemInput!): ListItem!
+  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
 
   """Run build of database"""
   executeSeed: Boolean!
-  createListItem(createListItemInput: CreateListItemInput!): ListItem!
-  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
-  removeListItem(id: Int!): ListItem!
 }
 
 input SignUpInput {
@@ -123,12 +124,16 @@ input UpdateListInput {
 }
 
 input CreateListItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  quantity: Int = 0
+  completed: Boolean = false
+  listId: ID!
+  itemId: ID!
 }
 
 input UpdateListItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  quantity: Int = 0
+  completed: Boolean = false
+  listId: ID
+  itemId: ID
+  id: ID!
 }
