@@ -1,18 +1,22 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
 
 @ObjectType()
 @Entity("lists")
 export class List {
-
+  
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field(() => String)
   @Column('text')
   name: string;
 
-  // Relation, index('user-id-list-index')
+  @Field(() => User)
+  @ManyToOne(() => User, user => user.lists)
+  @Index('userIdList-index')
   user: User;
 }
