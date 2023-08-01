@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -26,9 +26,14 @@ export class ListsService {
       return lists;
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} list`;
-  // }
+  async findOne(id: string, user: User): Promise<List> {
+    const list = await this.listsRepository.findOne({ 
+      where: { id, user: { id: user.id } }
+     });
+  
+     if(!list) throw new NotFoundException(`The list ${id} not found`);
+     return list;
+  }
 
   // update(id: number, updateListInput: UpdateListInput) {
   //   return `This action updates a #${id} list`;

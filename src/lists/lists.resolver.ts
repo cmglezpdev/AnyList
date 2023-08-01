@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
 
 import { JwtAuthGuard } from '../auth/guards';
 import { ListsService } from './lists.service';
@@ -28,10 +28,13 @@ export class ListsResolver {
     return this.listsService.findAll(user);
   }
 
-  // @Query(() => List, { name: 'list' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.listsService.findOne(id);
-  // }
+  @Query(() => List, { name: 'list' })
+  findOne(
+    @GetUser() user: User,
+    @Args('id', { type: () => ID }) id: string
+  ) {
+    return this.listsService.findOne(id, user);
+  }
 
   // @Mutation(() => List)
   // updateList(@Args('updateListInput') updateListInput: UpdateListInput) {
