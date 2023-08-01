@@ -44,8 +44,11 @@ export class ListsResolver {
     return this.listsService.update(updateListInput.id, updateListInput, user);
   }
 
-  // @Mutation(() => List)
-  // removeList(@Args('id', { type: () => Int }) id: number) {
-  //   return this.listsService.remove(id);
-  // }
+  @Mutation(() => List)
+  removeList(
+    @GetUser() user: User,
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string
+  ): Promise<List> {
+    return this.listsService.remove(id, user);
+  }
 }

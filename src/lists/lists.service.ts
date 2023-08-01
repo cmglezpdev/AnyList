@@ -40,7 +40,9 @@ export class ListsService {
     return this.listsRepository.save({ ...list,...updateListInput });
   }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} list`;
-  // }
+  async remove(id: string, user: User): Promise<List> {
+    const list = await this.findOne(id, user);
+    await this.listsRepository.remove(list);
+    return {...list, id };
+  }
 }
