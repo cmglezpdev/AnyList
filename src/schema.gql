@@ -2,10 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ListItem {
+  id: ID!
+  quantity: Int!
+  completed: Boolean!
+  item: Item!
+}
+
 type List {
   id: ID!
   name: String!
   user: User!
+  listItem: [ListItem!]!
 }
 
 type User {
@@ -34,16 +42,12 @@ type Item {
   quantityUnits: String
   category: String!
   user: User!
+  listItem: [ListItem!]!
 }
 
 type AuthResponse {
   user: User!
   token: String!
-}
-
-type ListItem {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
 
 type Query {
