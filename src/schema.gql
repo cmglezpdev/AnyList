@@ -17,6 +17,8 @@ type User {
   lastUpdateBy: User
   itemCount: Int!
   items(limit: Int = 10, offset: Int = 0, search: String): [Item!]!
+  listsCount: Int!
+  lists(limit: Int = 10, offset: Int = 0, search: String): [List!]!
 }
 
 """Valid roles for the users"""
@@ -43,7 +45,6 @@ type Query {
   revalidate: AuthResponse!
   users(roles: [ValidRoles!]! = []): [User!]!
   user(id: ID!): User!
-  listsOfUser(limit: Int = 10, offset: Int = 0, search: String): [List!]!
   items(limit: Int = 10, offset: Int = 0, search: String): [Item!]!
   item(id: ID!): Item!
   lists(limit: Int = 10, offset: Int = 0, search: String): [List!]!

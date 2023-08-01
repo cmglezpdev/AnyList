@@ -73,7 +73,15 @@ export class UsersResolver {
     return this.itemService.findAll(user, paginationArgs, searchArgs)
   }
 
-  @Query(() => [List], { name: 'listsOfUser' })
+  @ResolveField(() => Int, { name: 'listsCount' })
+  listsCount(
+    @Parent() user: User,
+    @GetUser([ValidRoles.admin]) adminUser: User
+  ): Promise<number> {
+    return this.listsService.listCountByUser(user);
+  }
+
+  @ResolveField(() => [List], { name: 'lists' })
   getLists(
     @GetUser() user: User,
     @Args() paginationArgs: PaginationArgs,
